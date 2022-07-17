@@ -1,0 +1,5 @@
+.DS_Store
+*.tfstate*
+.terraform
+kubeconfig
+**/charts
