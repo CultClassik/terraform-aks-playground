@@ -13,7 +13,7 @@ az extension add --name aks-preview
 # or update it
 az extension update --name aks-preview
 
-# enable
+# enablethe preview feature for the current azure subscription
 az feature register --name EnableOIDCIssuerPreview --namespace Microsoft.ContainerService
 
 # status
@@ -34,4 +34,10 @@ helm install workload-identity-webhook azure-workload-identity/workload-identity
    --namespace azure-workload-identity-system \
    --create-namespace \
    --set azureTenantID="${ARM_TENANT_ID}"
+```
+
+
+```bash
+# if not destroying the cluster don't forget to shut it down so you don't burn the monthly azure credit :/
+az aks stop -n terratest-centralus-test -g rg-aks-terratest-0002
 ```
