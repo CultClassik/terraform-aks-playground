@@ -64,30 +64,30 @@ resource "random_string" "random" {
   special = false
 }
 
-resource "tls_private_key" "aks_automation" {
-  algorithm = "RSA"
-  rsa_bits  = 2048
-}
+# resource "tls_private_key" "aks_automation" {
+#   algorithm = "RSA"
+#   rsa_bits  = 2048
+# }
 
-resource "local_file" "cert_pem" {
-  content  = tls_private_key.aks_automation.public_key_pem
-  filename = "${azuread_application.aks_automation.display_name}.pem"
-}
+# resource "local_file" "cert_pem" {
+#   content  = tls_private_key.aks_automation.public_key_pem
+#   filename = "${azuread_application.aks_automation.display_name}.pem"
+# }
 
-resource "local_file" "key_pem" {
-  content  = tls_private_key.aks_automation.private_key_pem
-  filename = "${azuread_application.aks_automation.display_name}.key"
-}
+# resource "local_file" "key_pem" {
+#   content  = tls_private_key.aks_automation.private_key_pem
+#   filename = "${azuread_application.aks_automation.display_name}.key"
+# }
 
-resource "null_resource" "cert_pfx" {
-  provisioner "local-exec" {
-    command = "openssl pkcs12 -export -keypbe NONE -certpbe NONE -inkey ${local_file.key_pem.filename} -in ${local_file.cert_pem.filename} -out ${azuread_application.aks_automation.display_name}.pfx"
-  }
-  depends_on = [
-    local_file.cert_pem,
-    local_file.key_pem,
-  ]
-}
+# resource "null_resource" "cert_pfx" {
+#   provisioner "local-exec" {
+#     command = "openssl pkcs12 -export -keypbe NONE -certpbe NONE -inkey ${local_file.key_pem.filename} -in ${local_file.cert_pem.filename} -out ${azuread_application.aks_automation.display_name}.pfx"
+#   }
+#   depends_on = [
+#     local_file.cert_pem,
+#     local_file.key_pem,
+#   ]
+# }
 
 resource "azuread_application" "aks_automation" {
   display_name = format("%s_%s", azurerm_automation_account.aks.name, random_string.random.result)
@@ -96,8 +96,9 @@ resource "azuread_application" "aks_automation" {
 resource "azuread_application_certificate" "aks_automation" {
   application_object_id = azuread_application.aks_automation.id
   type                  = "AsymmetricX509Cert"
-  value                 = tls_private_key.aks_automation.public_key_pem
   end_date              = time_offset.end_date.rfc3339
+  value                 = file("./certs/certificate.crt")
+  #   value                 = tls_private_key.aks_automation.public_key_pem
 }
 
 resource "azuread_service_principal" "aks_automation" {
@@ -111,8 +112,9 @@ resource "azuread_service_principal" "aks_automation" {
 resource "azuread_service_principal_certificate" "aks_automation" {
   service_principal_id = azuread_service_principal.aks_automation.id
   type                 = "AsymmetricX509Cert"
-  value                = tls_private_key.aks_automation.public_key_pem
+  value                = file("./certs/certificate.crt")
   end_date             = time_offset.end_date.rfc3339
+  #   value                = tls_private_key.aks_automation.public_key_pem
 }
 
 resource "azurerm_role_assignment" "aks_automation" {
@@ -121,24 +123,25 @@ resource "azurerm_role_assignment" "aks_automation" {
   principal_id         = azuread_service_principal.aks_automation.object_id
 }
 
-# resource "azurerm_automation_certificate" "aks_automation" {
-#   name                    = "AzureRunAsCertificate"
-#   resource_group_name     = azurerm_automation_account.aks.resource_group_name
-#   automation_account_name = azurerm_automation_account.aks.name
-#   base64                  = filebase64("${azuread_application.aks_automation.display_name}.pfx")
-#   depends_on              = [
-#     local_file.key_pem,
-#     local_file.cert_pem,
-#     null_resource.cert_pfx,
-#     ]
-# }
+resource "azurerm_automation_certificate" "aks_automation" {
+  name                    = "AzureRunAsCertificate"
+  resource_group_name     = azurerm_automation_account.aks.resource_group_name
+  automation_account_name = azurerm_automation_account.aks.name
+  base64                  = filebase64("./certs/certificate.pfx")
+  #   base64                  = filebase64("${azuread_application.aks_automation.display_name}.pfx")
+  #   depends_on              = [
+  #     local_file.key_pem,
+  #     local_file.cert_pem,
+  #     null_resource.cert_pfx,
+  #     ]
+}
 
-# resource "azurerm_automation_connection_service_principal" "aks_automation" {
-#   name                    = "AzureRunAsConnection"
-#   resource_group_name     = azurerm_automation_account.aks.resource_group_name
-#   automation_account_name = azurerm_automation_account.aks.name
-#   application_id          = azuread_service_principal.aks_automation.application_id
-#   tenant_id               = data.azurerm_client_config.current.tenant_id
-#   subscription_id         = data.azurerm_client_config.current.subscription_id
-#   certificate_thumbprint  = azurerm_automation_certificate.aks_automation.thumbprint
-# }
+resource "azurerm_automation_connection_service_principal" "aks_automation" {
+  name                    = "AzureRunAsConnection"
+  resource_group_name     = azurerm_automation_account.aks.resource_group_name
+  automation_account_name = azurerm_automation_account.aks.name
+  application_id          = azuread_service_principal.aks_automation.application_id
+  tenant_id               = data.azurerm_client_config.current.tenant_id
+  subscription_id         = data.azurerm_client_config.current.subscription_id
+  certificate_thumbprint  = azurerm_automation_certificate.aks_automation.thumbprint
+}
