@@ -3,3 +3,6 @@
 .terraform
 kubeconfig
 **/charts
+*.pem
+*.pfx
+*.key

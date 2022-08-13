@@ -2,6 +2,7 @@ provider "azurerm" {
   features {}
 }
 
+data "azurerm_client_config" "current" {}
 resource "azurerm_resource_group" "terratest" {
   name     = "rg-aks-terratest-${var.unique_id}"
   location = var.tags.location
@@ -73,6 +74,7 @@ module "aks_cluster" {
   location                  = var.tags.location
   max_pods                  = 31
   local_account_disabled    = false
+  vm_size                   = var.vm_size
   # msi_id            = var.msi_id #data.terraform_remote_state.devtest_infra.outputs.identity.id
   cluster_admin_ids = ["9ba4a348-227d-4411-bc37-3fb81ee8bc48"]
   # laws                = data.azurerm_log_analytics_workspace.example

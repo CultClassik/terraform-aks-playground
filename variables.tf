@@ -16,3 +16,7 @@ variable "tags_extra" {
   type    = map(any)
   default = {}
 }
+
+variable "vm_size" {
+  type = string
+}
