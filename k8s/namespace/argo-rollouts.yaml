@@ -9,7 +9,6 @@ metadata:
     istio-injection: enabled
     kubernetes.io/metadata.name: argo-rollouts
   name: argo-rollouts
-  resourceVersion: "57994"
   uid: 0c44c202-f31e-4be6-8494-8a057cae278d
 spec:
   finalizers:

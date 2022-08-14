@@ -1,7 +1,7 @@
 ```bash
 # 1. pre-create all required namespaces
 # 2. install argo-cd using the umbrella chart
-export ARGO_NS=argocd &&\
+export ARGO_NS=argo-cd &&\
 kubectl apply -f k8s/namespace &&\
 helm install argocd k8s/argocd --namespace "$ARGO_NS"
 
