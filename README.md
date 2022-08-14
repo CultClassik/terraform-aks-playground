@@ -20,8 +20,12 @@ az aks start -n terratest-centralus-test -g rg-aks-terratest-0002
 * Create resources with Terraform
 ```bash
 terraform init
+
 terraform plan
+
 terraform apply -auto-approve
+
+export KUBECONFG=$(pwd)/kubeconfig
 ```
 
 ## Workload Identity
