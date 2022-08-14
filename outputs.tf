@@ -1,7 +1,7 @@
 output "ssh_private_key" {
   description = "The auto generated ssh private key for the cluster"
   sensitive   = true
-  value       = tls_private_key.example.private_key_pem
+  value       = tls_private_key.aks.private_key_pem
 }
 
 output "kube_admin_config" {

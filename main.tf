@@ -9,7 +9,7 @@ resource "azurerm_resource_group" "terratest" {
   tags     = local.tags_all
 }
 
-resource "tls_private_key" "example" {
+resource "tls_private_key" "aks" {
   algorithm = "RSA"
   rsa_bits  = 4096
 }
@@ -36,7 +36,7 @@ resource "azurerm_subnet" "terratest" {
 }
 
 # resource "local_file" "ssh_private_key" {
-#   content         = tls_private_key.example.private_key_pem
+#   content         = tls_private_key.aks.private_key_pem
 #   filename        = "adminuser_rsa.key"
 #   file_permission = "0600"
 # }
