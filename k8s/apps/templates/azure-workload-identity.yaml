@@ -8,7 +8,7 @@ metadata:
 spec:
   destination:
     server: https://kubernetes.default.svc
-    namespace: azure-workload-identity
+    namespace: azure-workload-identity-system
   project: default
   source:
     path: k8s/azure-workload-identity/
