@@ -11,9 +11,12 @@ spec:
     namespace: azure-workload-identity-system
   project: default
   source:
-    path: k8s/azure-workload-identity/
-    repoURL: https://github.com/CultClassik/terraform-aks-playground.git
-    targetRevision: HEAD
+    chart: workload-identity-webhook
+    repoURL: https://azure.github.io/azure-workload-identity/charts
+    targetRevision: '0.12.0'
+    helm:
+      values:
+        azureTenantID: fc6ff48d-9858-46be-be10-c3a663f4bcbf
   syncPolicy:
     automated:
       prune: true
