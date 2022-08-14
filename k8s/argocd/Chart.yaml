@@ -1,5 +1,5 @@
 apiVersion: v2
-name: aks-config
+name: argocd
 description: Configures the AKS baseline
 
 # A chart can be either an 'application' or a 'library' chart.
