@@ -11,9 +11,9 @@ spec:
     namespace: istio-ingress
   project: default
   source:
-    path: k8s/istio-ingress/
-    repoURL: https://github.com/CultClassik/terraform-aks-playground.git
-    targetRevision: HEAD
+    chart: gateway
+    repository: https://istio-release.storage.googleapis.com/charts
+    targetRevision: '1.12.9'
   syncPolicy:
     automated:
       prune: true
