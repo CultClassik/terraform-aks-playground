@@ -21,17 +21,9 @@ version: 0.1.0
 # incremented each time you make changes to the application. Versions are not expected to
 # follow Semantic Versioning. They should reflect the version the application is using.
 # It is recommended to use it with quotes.
-appVersion: "1.12.9"
+appVersion: "1.30.0"
 
 dependencies:
-  # https://istio.io/latest/docs/releases/supported-releases/
-  # https://istio.io/latest/docs/setup/additional-setup/customize-installation-helm/
-  - name: base
-    version: '1.12.9'
-    repository: https://istio-release.storage.googleapis.com/charts
-  - name: istiod
-    version: '1.12.9'
-    repository: https://istio-release.storage.googleapis.com/charts
   - name: kiali
     version: '1.30.0'
-    repository: https://istio-release.storage.googleapis.com/charts
+    repository: https://kiali.org/helm-charts

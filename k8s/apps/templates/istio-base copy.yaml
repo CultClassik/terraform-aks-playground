@@ -1,17 +1,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: istio-base
+  name: kiali-operator
   namespace: argocd
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
     server: https://kubernetes.default.svc
-    namespace: istio-system
+    namespace: kiali-operator
   project: default
   source:
-    path: k8s/istio-base/
+    path: k8s/kiali/
     repoURL: https://github.com/CultClassik/terraform-aks-playground.git
     targetRevision: HEAD
   syncPolicy:
