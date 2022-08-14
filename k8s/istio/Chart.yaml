@@ -1,6 +1,6 @@
 apiVersion: v2
-name: argocd
-description: Configures the AKS baseline
+name: istio
+description: Istio
 
 # A chart can be either an 'application' or a 'library' chart.
 #
@@ -21,9 +21,18 @@ version: 0.1.0
 # incremented each time you make changes to the application. Versions are not expected to
 # follow Semantic Versioning. They should reflect the version the application is using.
 # It is recommended to use it with quotes.
-appVersion: "1.16.0"
+appVersion: "1.12.9"
 
 dependencies:
-  - name: argo-cd
-    version: '4.9.14'
-    repository: https://argoproj.github.io/argo-helm
+  - name: base
+    version: '1.12.9'
+    repository: https://istio-release.storage.googleapis.com/charts
+  - name: istiod
+    version: '1.12.9'
+    repository: https://istio-release.storage.googleapis.com/charts
+  # - name: gateway
+  #   version: '1.12.9'
+  #   repository: https://istio-release.storage.googleapis.com/charts
+    # https://istio.io/latest/docs/releases/supported-releases/
+    # https://istio.io/latest/docs/setup/additional-setup/customize-installation-helm/
+
