@@ -28,17 +28,3 @@ dependencies:
   - name: workload-identity-webhook
     version: '0.12.0'
     repository: https://azure.github.io/azure-workload-identity/charts
-    
-
-  # - name: base
-  #   version: '1.12.9'
-  #   repository: https://istio-release.storage.googleapis.com/charts
-  # - name: istiod
-  #   version: '1.12.9'
-  #   repository: https://istio-release.storage.googleapis.com/charts
-  # - name: gateway
-  #   version: '1.12.9'
-  #   repository: https://istio-release.storage.googleapis.com/charts
-    # https://istio.io/latest/docs/releases/supported-releases/
-    # https://istio.io/latest/docs/setup/additional-setup/customize-installation-helm/
-
