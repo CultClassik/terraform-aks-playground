@@ -24,7 +24,7 @@ version: 0.1.0
 appVersion: "0.12.0"
 
 dependencies:
-# https://github.com/Azure/azure-workload-identity
-  # - name: workload-identity-webhook
-  #   version: '0.12.0'
-  #   repository: https://azure.github.io/azure-workload-identity/charts
+  # https://github.com/Azure/azure-workload-identity
+  - name: workload-identity-webhook
+    version: '0.12.0'
+    repository: https://azure.github.io/azure-workload-identity/charts
