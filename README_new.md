@@ -27,3 +27,6 @@ kubectl delete secret -l owner=helm -n "$ARGO_NS"
 helm repo add argo https://argoproj.github.io/argo-helm
 helm install my-release argo/argo-rollouts
 ```
+
+# kiali
+helm repo add kiali https://kiali.org/helm-charts

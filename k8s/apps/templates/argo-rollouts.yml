@@ -11,9 +11,9 @@ spec:
     namespace: argo-rollouts
   project: default
   source:
-    path: k8s/argo-rollouts/
-    repoURL: https://github.com/CultClassik/terraform-aks-playground.git
-    targetRevision: HEAD
+    chart: argo-rollouts
+    repoURL: https://argoproj.github.io/argo-helm
+    targetRevision: v1.2.1
   syncPolicy:
     automated:
       prune: true
