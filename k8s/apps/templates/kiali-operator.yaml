@@ -11,9 +11,14 @@ spec:
     namespace: kiali-operator
   project: default
   source:
-    path: k8s/kiali/
-    repoURL: https://github.com/CultClassik/terraform-aks-playground.git
-    targetRevision: HEAD
+    chart: kiali-operator
+    repository: https://kiali.org/helm-charts
+    targetRevision: '1.30.0'
+    helm:
+      values:
+        cr:
+          create: true
+          namespace: istio-system
   syncPolicy:
     automated:
       prune: true
