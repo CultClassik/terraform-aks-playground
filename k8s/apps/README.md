@@ -1,0 +1,1 @@
+Applications that Argo CD should manage are placed here.
