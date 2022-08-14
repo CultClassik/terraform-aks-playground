@@ -24,9 +24,11 @@ version: 0.1.0
 appVersion: "1.16.0"
 
 dependencies:
-  - name: argo-cd
-    version: '4.9.14'
-    repository: https://argoproj.github.io/argo-helm
+# https://github.com/Azure/azure-workload-identity
+  - name: workload-identity-webhook
+    version: '0.12.0'
+    repository: https://azure.github.io/azure-workload-identity/charts
+    
 
   # - name: base
   #   version: '1.12.9'
@@ -40,7 +42,3 @@ dependencies:
     # https://istio.io/latest/docs/releases/supported-releases/
     # https://istio.io/latest/docs/setup/additional-setup/customize-installation-helm/
 
-  # - name: workload-identity-webhook
-  #   version: '0.12.0'
-  #   repository: https://azure.github.io/azure-workload-identity/charts
-    # https://github.com/Azure/azure-workload-identity
