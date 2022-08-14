@@ -19,7 +19,6 @@ kubectl create namespace "$ISTIO_INGRESS_NS" &&\
 kubectl label namespace "$ISTIO_INGRESS_NS" istio-injection=enabled &&\
 helm install istio-ingress istio/gateway -n "$ISTIO_INGRESS_NS" --wait
 
-
 export INGRESS_HOST=$(kubectl -n "$ISTIO_INGRESS_NS" get service istio-ingress -o jsonpath='{.status.loadBalancer.ingress[0].ip}') &&\
 export INGRESS_PORT=$(kubectl -n "$ISTIO_INGRESS_NS" get service istio-ingress -o jsonpath='{.spec.ports[?(@.name=="http2")].port}') &&\
 export SECURE_INGRESS_PORT=$(kubectl -n "$ISTIO_INGRESS_NS" get service istio-ingress -o jsonpath='{.spec.ports[?(@.name=="https")].port}') &&\
