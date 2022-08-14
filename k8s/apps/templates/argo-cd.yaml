@@ -11,7 +11,7 @@ spec:
     namespace: argo-cd
   project: default
   source:
-    path: k8s/aks-config/argo-cd
+    path: k8s/aks-config
     repoURL: https://github.com/CultClassik/terraform-aks-playground.git
     targetRevision: HEAD
   syncPolicy:
