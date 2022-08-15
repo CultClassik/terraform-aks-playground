@@ -14,7 +14,7 @@ kubectl -n "$ARGO_NS" get secret argocd-initial-admin-secret -o jsonpath="{.data
 export ARGO_SVC=argocd-server &&\
 kubectl port-forward "svc/${ARGO_SVC}" -n "$ARGO_NS" 8080:443
 
-# install our apps to argo - argo will now manage itself
+# install our apps to argo - argo will now manage itself and anything else configured in k8s/apps chart
 helm template k8s/apps/ --namespace "$ARGO_NS" | kubectl apply -f -
 
 # once argo-cd is synced, ensure helm no longer manages our umbrella chart

@@ -20,3 +20,8 @@ variable "tags_extra" {
 variable "vm_size" {
   type = string
 }
+
+variable "auto_start_time" {
+  description = "time for the automation runbook to start (shuts down aks cluster)"
+  type = string  
+}

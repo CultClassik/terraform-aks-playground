@@ -12,10 +12,10 @@ spec:
   project: default
   source:
     chart: kiali-operator
-    repository: https://kiali.org/helm-charts
+    repoURL: https://kiali.org/helm-charts
     targetRevision: '1.30.0'
     helm:
-      values:
+      values: |
         cr:
           create: true
           namespace: istio-system

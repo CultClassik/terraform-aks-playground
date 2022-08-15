@@ -46,7 +46,7 @@ resource "azurerm_automation_schedule" "aks_shutdown" {
   automation_account_name = azurerm_automation_account.aks.name
   frequency               = "Hour"
   interval                = 24
-  start_time              = "2022-08-13T00:00:00-05:00"
+  start_time              = var.auto_start_time
   timezone                = "America/Chicago"
   description             = "Every Day at Midnight"
 }
