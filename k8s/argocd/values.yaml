@@ -1,7 +1,7 @@
 # https://github.com/argoproj/argo-helm/blob/master/charts/argo-cd/values.yaml
 argo-cd:
   metadata:
-    namespace: argocd
+    namespace: argo-cd
   dex:
     enabled: false
   server:
