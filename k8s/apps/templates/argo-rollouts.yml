@@ -13,7 +13,7 @@ spec:
   source:
     chart: argo-rollouts
     repoURL: https://argoproj.github.io/argo-helm
-    targetRevision: v1.2.1
+    targetRevision: v1.2.2
   syncPolicy:
     automated:
       prune: true
