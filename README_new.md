@@ -19,7 +19,7 @@ helm template k8s/apps/ --namespace "$ARGO_NS" | kubectl apply -f -
 
 # once argo-cd is synced, ensure helm no longer manages our umbrella chart
 # argo will now generate the manifests from the helm template and manage everything for us
-kubectl delete secret -l owner=helm -n "$ARGO_NS"
+kubectl delete secret -l owner=helm,name=argocd -n "$ARGO_NS"
 
 ```
 
