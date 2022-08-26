@@ -1,0 +1,60 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: hashicorp-vault
+  namespace: argo-cd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: vault
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+  source:
+    chart: hashicorp/vault
+    repoURL: https://helm.releases.hashicorp.com
+    targetRevision: '0.21.0'
+    helm:
+      values: |
+        global:
+          imagePullSecrets: []
+          # TLS for end-to-end encrypted transport
+          tlsDisable: true
+        injector:
+          image:
+            repository: "hashicorp/vault-k8s"
+            tag: "0.17.0"
+            pullPolicy: IfNotPresent
+          agentImage:
+            repository: "hashicorp/vault"
+            tag: "1.11.2"
+        webhook:
+          namespaceSelector: {}
+        certs:
+          # secretName is the name of the secret that has the TLS certificate and
+          # private key to serve the injector webhook. If this is null, then the
+          # injector will default to its automatic management mode that will assign
+          # a service account to the injector to generate its own certificates.
+          secretName: null
+
+          # caBundle is a base64-encoded PEM-encoded certificate bundle for the CA
+          # that signed the TLS certificate that the webhook serves. This must be set
+          # if secretName is non-null unless an external service like cert-manager is
+          # keeping the caBundle updated.
+          caBundle: ""
+
+          # certName and keyName are the names of the files within the secret for
+          # the TLS cert and private key, respectively. These have reasonable
+          # defaults but can be customized if necessary.
+          certName: tls.crt
+          keyName: tls.key
+        server:
+          image:
+            repository: "hashicorp/vault"
+            tag: "1.11.2"
+            # Overrides the default Image Pull Policy
+            pullPolicy: IfNotPresent
