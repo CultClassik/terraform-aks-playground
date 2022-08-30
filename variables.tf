@@ -23,5 +23,10 @@ variable "vm_size" {
 
 variable "auto_start_time" {
   description = "time for the automation runbook to start (shuts down aks cluster)"
-  type = string  
+  type        = string
+}
+
+variable "node_lb_ip" {
+  description = "IP of the LB created by AKS for the nodepool"
+  default     = null
 }
