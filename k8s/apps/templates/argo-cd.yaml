@@ -20,18 +20,18 @@ spec:
     targetRevision: HEAD
     helm:
       values: |
-argo-cd:
-  metadata:
-    namespace: argo-cd
-  dex:
-    enabled: false
-  server:
-    extraArgs:
-      - --insecure
-      - --rootpath
-      - /argocd
-    config:
-      repositories: |
-        - type: helm
-          name: argo-cd
-          url: https://argoproj.github.io/argo-helm
+        argo-cd:
+          metadata:
+            namespace: argo-cd
+          dex:
+            enabled: false
+          server:
+            extraArgs:
+              - --insecure
+              - --rootpath
+              - /argocd
+            config:
+              repositories: |
+                - type: helm
+                  name: argo-cd
+                  url: https://argoproj.github.io/argo-helm
