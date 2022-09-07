@@ -18,20 +18,20 @@ spec:
     path: k8s/argocd/
     repoURL: https://github.com/CultClassik/terraform-aks-playground.git
     targetRevision: HEAD
-    # helm:
-    #   values: |
-    #     argo-cd:
-    #       metadata:
-    #         namespace: argo-cd
-    #       dex:
-    #         enabled: false
-    #       server:
-    #         extraArgs:
-    #           - --insecure
-    #           - --rootpath
-    #           - /argocd
-    #         config:
-    #           repositories: |
-    #             - type: helm
-    #               name: argo-cd
-    #               url: https://argoproj.github.io/argo-helm
+    helm:
+      values: |
+        argo-cd:
+          metadata:
+            namespace: argo-cd
+          dex:
+            enabled: false
+          server:
+            extraArgs:
+              - --insecure
+              - --rootpath
+              - /argocd
+            config:
+              repositories: |
+                - type: helm
+                  name: argo-cd
+                  url: https://argoproj.github.io/argo-helm
