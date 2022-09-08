@@ -15,7 +15,7 @@ spec:
       prune: true
       selfHeal: true
   source:
-    chart: hashicorp/vault
+    chart: vault
     repoURL: https://helm.releases.hashicorp.com
     targetRevision: 0.21.0
     helm:
