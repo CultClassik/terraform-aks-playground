@@ -8,3 +8,4 @@ kubeconfig
 *.key
 *.crt
 **/certs
+secret/*
