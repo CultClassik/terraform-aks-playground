@@ -115,7 +115,8 @@ spec:
           # Run Vault in "HA" mode.
           ha:
             enabled: true
-            replicas: 5
+            # recommended to be 5 or more nodes, using 2 for "lab"
+            replicas: 2
             raft:
               enabled: true
               setNodeId: true
