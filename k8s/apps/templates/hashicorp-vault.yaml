@@ -18,7 +18,7 @@ spec:
     - group: admissionregistration.k8s.io
       kind: MutatingWebhookConfiguration
       jqPathExpressions:
-       - .webhooks[]?.clientConfig.caB
+       - .webhooks[]?.clientConfig.caBundle
   source:
     chart: vault
     repoURL: https://helm.releases.hashicorp.com

@@ -18,3 +18,8 @@ spec:
     automated:
       prune: true
       selfHeal: true
+  ignoreDifferences:
+    - group: admissionregistration.k8s.io
+      kind: ValidatingWebhookConfiguration
+      jqPathExpressions:
+       - .webhooks[]?.clientConfig.caBundle
