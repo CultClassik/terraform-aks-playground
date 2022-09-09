@@ -11,9 +11,9 @@ spec:
   http:
   - match:
     - uri:
-        prefix: /headers
-    - uri:
-        prefix: /uuid
+        prefix: /httpbin
+    rewrite:
+      uri: /
     route:
     - destination:
         port:
