@@ -12,6 +12,8 @@ spec:
   - match:
     - uri:
         prefix: /headers
+    - uri:
+        prefix: /uuid
     route:
     - destination:
         port:
