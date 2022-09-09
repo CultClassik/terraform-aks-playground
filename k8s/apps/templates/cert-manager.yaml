@@ -22,4 +22,4 @@ spec:
     - group: admissionregistration.k8s.io
       kind: ValidatingWebhookConfiguration
       jqPathExpressions:
-       - .webhooks[]?.clientConfig.caBundle
+       - .webhooks[]?.namespaceSelector.matchExpressions

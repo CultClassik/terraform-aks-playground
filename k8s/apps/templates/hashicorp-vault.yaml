@@ -14,6 +14,7 @@ spec:
     automated:
       prune: true
       selfHeal: true
+  # this ensures argocd doesn't see the app as constantly out of sync due to mutating webhook
   ignoreDifferences:
     - group: admissionregistration.k8s.io
       kind: MutatingWebhookConfiguration
