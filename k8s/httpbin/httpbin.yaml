@@ -63,16 +63,16 @@ apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
   namespace: httpbin
-  name: httpbin-https
+  name: httpbin
 spec:
   hosts:
-  - playground.diehlabs.com
+  - "*"
   gateways:
-  - istio-ingressgateway
+  - httpbin-ingressgateway
   http:
   - match:
     - uri:
-        prefix: /uuid
+        prefix: /headers
     route:
     - destination:
         port:
