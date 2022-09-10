@@ -15,8 +15,8 @@ spec:
     repoURL: https://github.com/CultClassik/terraform-aks-playground.git
     targetRevision: HEAD
   syncPolicy:
-    syncOptions:
-      - CreateNamespace=true
+    # syncOptions:
+    #   - CreateNamespace=true
     automated:
       prune: true
       selfHeal: true

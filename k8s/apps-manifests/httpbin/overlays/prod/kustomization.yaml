@@ -31,4 +31,4 @@ patchesJson6902:
     patch: |-
       - op: replace
         path: /metadata/name
-        value: httpbin-dev
+        value: httpbin-prod
