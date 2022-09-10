@@ -18,6 +18,8 @@ spec:
       values: |
         azureTenantID: fc6ff48d-9858-46be-be10-c3a663f4bcbf
   syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
     automated:
       prune: true
       selfHeal: true

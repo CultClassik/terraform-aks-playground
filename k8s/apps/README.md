@@ -1,1 +1,1 @@
-Applications that Argo CD should manage are placed here.
+Umbrella chart for applications for ArgoCD

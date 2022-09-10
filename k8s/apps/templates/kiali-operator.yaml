@@ -10,6 +10,12 @@ spec:
     server: https://kubernetes.default.svc
     namespace: kiali-operator
   project: default
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
   source:
     chart: kiali-operator
     repoURL: https://kiali.org/helm-charts
@@ -19,7 +25,3 @@ spec:
         cr:
           create: true
           namespace: istio-system
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
