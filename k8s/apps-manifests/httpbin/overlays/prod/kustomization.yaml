@@ -3,7 +3,7 @@ kind: Kustomization
 namespace: httpbin-prod
 
 resources:
-- ../base
+- ../../base
 
 patchesJson6902:
   - target:
