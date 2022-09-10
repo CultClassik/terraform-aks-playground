@@ -1,17 +1,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: httpbin-kustomize
+  name: httpbin
   namespace: argo-cd
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
     server: https://kubernetes.default.svc
-    namespace: httpbin-kustomize
+    namespace: httpbin
   project: default
   source:
-    path: k8s/apps-manifests/httpbin-kustomize
+    path: k8s/apps-manifests/httpbin/prod
     repoURL: https://github.com/CultClassik/terraform-aks-playground.git
     targetRevision: HEAD
   syncPolicy:
