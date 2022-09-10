@@ -23,4 +23,4 @@ patchesJson6902:
     patch: |-
       - op: replace
         path: /spec/http/0/match/0/uri/prefix
-        value: /httpbin/prod
+        value: /httpbin
