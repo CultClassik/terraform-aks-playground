@@ -3,8 +3,7 @@ kind: Kustomization
 namespace: httpbin-dev
 
 resources:
-- ../httpbin.yaml
-- ../virtualservice.yaml
+- ../base
 
 patchesJson6902:
   - target:

@@ -11,7 +11,7 @@ spec:
     namespace: httpbin-prod
   project: default
   source:
-    path: k8s/apps-manifests/httpbin/prod
+    path: k8s/apps-manifests/httpbin/overlays/prod
     repoURL: https://github.com/CultClassik/terraform-aks-playground.git
     targetRevision: HEAD
   syncPolicy:
