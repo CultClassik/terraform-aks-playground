@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: default.bogus.name
+  creationTimestamp: null
+  labels:
+    istio-injection: enabled
+spec: {}
+status: {}

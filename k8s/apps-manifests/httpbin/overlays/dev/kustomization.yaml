@@ -24,6 +24,17 @@ patchesJson6902:
       - op: replace
         path: /spec/http/0/match/0/uri/prefix
         value: /httpbin/dev
+  - target:
+      version: v1
+      kind: Namespace
+      name: default.bogus.name
+    patch: |-
+      - op: replace
+        path: /metadata/name
+        value: httpbin-dev
+
+
+
       # - op: replace
       #   path: /spec/http/0/match/route/0/destination/host
       #   value: httpbin-dev/httpbin
