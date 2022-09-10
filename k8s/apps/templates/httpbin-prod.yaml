@@ -8,7 +8,7 @@ metadata:
 spec:
   destination:
     server: https://kubernetes.default.svc
-    namespace: httpbin
+    namespace: httpbin-prod
   project: default
   source:
     path: k8s/apps-manifests/httpbin/prod
