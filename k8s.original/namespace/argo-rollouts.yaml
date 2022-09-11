@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  annotations:
+    istio-injection: enabled
+    kubernetes.io/metadata.name: argo-rollouts
+  name: argo-rollouts
+spec:
+  finalizers:
+  - kubernetes
+status:
+  phase: Active

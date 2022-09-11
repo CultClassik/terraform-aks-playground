@@ -7,7 +7,14 @@ resource "azurerm_automation_runbook" "aks" {
   log_progress            = "true"
   description             = "Turn off aks to save dough"
   runbook_type            = "PowerShellWorkflow"
-  content                 = local.shutdown_script
+  content = templatefile(
+    "${path.module}/automation_script.tftpl", {
+      subscription_id = data.azurerm_client_config.current.subscription_id,
+      rg_name         = azurerm_resource_group.terratest.name,
+      cluster_name    = module.aks_cluster.cluster_name,
+    }
+  )
+  tags = local.tags_all
 }
 
 resource "azurerm_automation_account" "aks" {
@@ -18,37 +25,21 @@ resource "azurerm_automation_account" "aks" {
   tags                = local.tags_all
 }
 
-locals {
-  shutdown_script = <<EOT
-Disable-AzContextAutosave –Scope Process
-$connection = Get-AutomationConnection -Name AzureRunAsConnection
-$logonAttempt = 0
-while(!($connectionResult) -And ($logonAttempt -le 10))
-{
-    $LogonAttempt++
-    # Logging in to Azure...
-    $connectionResult =    Connect-AzAccount `
-                               -ServicePrincipal `
-                               -Tenant $connection.TenantID `
-                               -ApplicationId $connection.ApplicationID `
-                               -CertificateThumbprint $connection.CertificateThumbprint
-
-    Start-Sleep -Seconds 1
-}
-Set-AzContext -SubscriptionId "${data.azurerm_client_config.current.subscription_id}"
-Stop-AzAksCluster -ResourceGroupName ${azurerm_resource_group.terratest.name} -Name ${module.aks_cluster.cluster_name}
-EOT
-}
-
 resource "azurerm_automation_schedule" "aks_shutdown" {
   name                    = "EveryDayMignight"
   resource_group_name     = azurerm_resource_group.terratest.name
   automation_account_name = azurerm_automation_account.aks.name
   frequency               = "Hour"
   interval                = 24
-  start_time              = var.auto_start_time
+  start_time              = local.automation_start_time # var.auto_start_time
   timezone                = "America/Chicago"
   description             = "Every Day at Midnight"
+  lifecycle {
+    ignore_changes = [
+      # ignore changes to start_time since it's only needed when creating
+      start_time,
+    ]
+  }
 }
 
 ####################################################################################################

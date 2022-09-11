@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    kubernetes.io/metadata.name: kiali-operator
+    name: kiali-operator
+  name: kiali-operator
+spec:
+  finalizers:
+  - kubernetes
+status:
+  phase: Active

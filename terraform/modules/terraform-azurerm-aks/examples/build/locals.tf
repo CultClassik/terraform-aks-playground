@@ -2,7 +2,6 @@ locals {
 
   # msi_obj_id = "fdd3f20b-18e3-4c89-a6e9-c4ddc2265616"
 
-  automation_start_time = timeadd(timestamp(), "20m")
   tags_all = merge(
     var.tags,
     var.tags_extra

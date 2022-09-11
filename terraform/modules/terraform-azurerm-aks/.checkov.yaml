@@ -1,0 +1,17 @@
+branch: master
+directory:
+- .
+download-external-modules: false
+evaluate-variables: true
+external-modules-download-path: .external_modules
+framework:
+- terraform
+output:
+- cli
+skip-check:
+- CKV_AZURE_4
+- CKV_AZURE_6 #API ranges
+- CKV_AZURE_115
+- CKV_AZURE_117
+
+soft-fail: true

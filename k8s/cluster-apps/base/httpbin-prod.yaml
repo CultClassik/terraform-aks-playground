@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: httpbin-prod
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: httpbin-prod
+  project: default
+  source:
+    path: k8s/apps-manifests/httpbin/overlays/prod
+    repoURL: https://github.com/CultClassik/terraform-aks-playground.git
+    targetRevision: HEAD
+  syncPolicy:
+    # syncOptions:
+    #   - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true

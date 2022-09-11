@@ -14,3 +14,23 @@ output "cluster_name" {
   description = "The auto-generated cluster name"
   value       = module.aks_cluster.cluster_name
 }
+
+output "kube_admin_password" {
+  value     = module.aks_cluster.kube_admin_password
+  sensitive = true
+}
+
+output "kube_admin_client_certificate" {
+  value     = module.aks_cluster.kube_admin_client_certificate
+  sensitive = true
+}
+
+output "kube_admin_client_key" {
+  value     = module.aks_cluster.kube_admin_client_key
+  sensitive = true
+}
+
+output "kube_admin_cluster_ca_certificate" {
+  value     = module.aks_cluster.kube_admin_cluster_ca_certificate
+  sensitive = true
+}

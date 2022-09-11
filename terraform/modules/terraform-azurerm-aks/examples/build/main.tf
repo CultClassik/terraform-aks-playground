@@ -2,16 +2,15 @@ provider "azurerm" {
   features {}
 }
 
-data "azurerm_client_config" "current" {}
 resource "azurerm_resource_group" "terratest" {
-  name     = "rg-aks-terratest-${var.unique_id}"
+  name     = var.rg_name
   location = var.tags.location
   tags     = local.tags_all
 }
 
-resource "tls_private_key" "aks" {
+resource "tls_private_key" "example" {
   algorithm = "RSA"
-  rsa_bits  = 4096
+  rsa_bits  = 2048
 }
 
 resource "azurerm_virtual_network" "terratest" {
@@ -20,9 +19,6 @@ resource "azurerm_virtual_network" "terratest" {
   resource_group_name = azurerm_resource_group.terratest.name
   address_space       = ["172.16.14.0/24"]
   tags                = local.tags_all
-  depends_on = [
-    azurerm_resource_group.terratest
-  ]
 }
 
 resource "azurerm_subnet" "terratest" {
@@ -30,29 +26,36 @@ resource "azurerm_subnet" "terratest" {
   resource_group_name  = azurerm_resource_group.terratest.name
   virtual_network_name = azurerm_virtual_network.terratest.name
   address_prefixes     = ["172.16.14.0/24"]
-  depends_on = [
-    azurerm_virtual_network.terratest
-  ]
 }
 
 # resource "local_file" "ssh_private_key" {
-#   content         = tls_private_key.aks.private_key_pem
+#   content         = tls_private_key.example.private_key_pem
 #   filename        = "adminuser_rsa.key"
 #   file_permission = "0600"
 # }
 
 resource "local_file" "kubeconfig" {
   content         = module.aks_cluster.kube_admin_config
-  filename        = "../kubeconfig"
+  filename        = "kubeconfig"
   file_permission = "0600"
   depends_on = [
     module.aks_cluster
   ]
 }
 
+# data "azurerm_virtual_network" "example" {
+#   name                = "westus-dev-aks-vnet"
+#   resource_group_name = "westus-dev-aks-rg"
+# }
+
+# data "azurerm_log_analytics_workspace" "example" {
+#   name                = "<laws-name>"
+#   resource_group_name = "<laws-rg-name>"
+# }
+
 module "aks_cluster" {
-  source                    = "./modules/terraform-azurerm-aks"
-  resource_group_name       = azurerm_resource_group.terratest.name
+  source                    = "../.."
+  resource_group_name       = var.rg_name
   tags                      = var.tags
   tags_extra                = var.tags_extra
   subnet_id                 = azurerm_subnet.terratest.id
@@ -64,13 +67,11 @@ module "aks_cluster" {
   location                  = var.tags.location
   max_pods                  = 31
   local_account_disabled    = false
-  vm_size                   = var.vm_size
   # msi_id            = var.msi_id #data.terraform_remote_state.devtest_infra.outputs.identity.id
   cluster_admin_ids = ["9ba4a348-227d-4411-bc37-3fb81ee8bc48"]
   # laws                = data.azurerm_log_analytics_workspace.example
   depends_on = [
-    azurerm_resource_group.terratest,
-    azurerm_subnet.terratest
+    azurerm_resource_group.terratest
   ]
 }
 

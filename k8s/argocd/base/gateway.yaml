@@ -1,0 +1,18 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  namespace: argocd
+  name: istio-ingressgateway
+spec:
+  selector:
+    istio: ingress
+  servers:
+  - port:
+      number: 443
+      name: https
+      protocol: HTTPS
+    tls:
+      mode: SIMPLE
+      credentialName: ingress-cert # This should match the Certificate secretName
+    hosts:
+    - playground.diehlabs.com # This should match a DNS name in the Certificate

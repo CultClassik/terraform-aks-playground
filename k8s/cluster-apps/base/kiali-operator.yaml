@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kiali-operator
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: kiali-operator
+  project: default
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+  source:
+    chart: kiali-operator
+    repoURL: https://kiali.org/helm-charts
+    targetRevision: '1.30.0'
+    helm:
+      values: |
+        cr:
+          create: true
+          namespace: istio-system

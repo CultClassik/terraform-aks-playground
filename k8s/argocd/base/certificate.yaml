@@ -1,0 +1,25 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: ingress-cert
+  namespace: argocd
+spec:
+  secretName: ingress-cert
+  commonName: playground.diehlabs.com
+  dnsNames:
+  - playground.diehlabs.com
+  duration: 2160h0m0s # 90d
+  renewBefore: 360h0m0s # 15d
+  subject:
+    organizations:
+      - Diehlabs
+  privateKey:
+    rotationPolicy: Always
+    algorithm: RSA
+    encoding: PKCS1
+    size: 2048
+  usages:
+    - any
+  issuerRef:
+    name: letsencrypt
+    kind: ClusterIssuer

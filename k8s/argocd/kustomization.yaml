@@ -1,0 +1,36 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: argocd
+
+resources:
+- base/namespace.yaml
+# - base/certificate.yaml
+# - base/gateway.yaml
+# - base/virtualservice.yaml
+- base/rollouts-extension.yaml
+- https://raw.githubusercontent.com/argoproj/argo-cd/master/manifests/ha/install.yaml
+
+components:
+- https://github.com/argoproj-labs/argocd-extensions/manifests
+
+# patchesStrategicMerge:
+# - overlays/production/argo-cd-cm.yaml
+# - overlays/production/argocd-server-service.yaml
+# - overlays/production/argocd-repo-server-deploy.yaml
+# - overlays/production/argocd-notifications-controller-deploy.yaml
+# - overlays/production/argocd-notifications-cm.yaml
+# - https://raw.githubusercontent.com/argoproj/argo-cd/master/notifications_catalog/install.yaml
+
+patchesJson6902:
+- path: overlays/production/argocd-server-deploy-command.yaml
+  target:
+    group: apps
+    kind: Deployment
+    name: argocd-server
+    version: v1
+
+images:
+- name: quay.io/argoproj/argocd
+  newName: ghcr.io/argoproj/argocd
+  newTag: 2.5.0-9fac0f6a

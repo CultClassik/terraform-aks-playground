@@ -1,0 +1,5 @@
+resources:
+- ns.yaml
+- httpbin.yaml
+- virtualservice.yaml
+# - https://github.com/istio/istio//samples/httpbin/httpbin.yaml?ref=1.15.0
