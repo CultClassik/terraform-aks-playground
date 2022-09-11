@@ -16,18 +16,14 @@ metadata:
 spec:
   acme:
     server: "https://acme-v02.api.letsencrypt.org/directory"
-    email: akscm@diehlabs.com
+    email: aks-cert-mgr@diehlabs.com
     privateKeySecretRef:
       name: letsencrypt
     solvers:
       - dns01:
           azureDNS:
-            clientID: 0de85b72-b574-4235-aea6-4ebe3aea155a
             clientSecretSecretRef:
               key: client-secret
               name: azuredns-config
-            subscriptionID: 502ac5b9-6b22-453d-94f9-5eee652d01ac
-            tenantID: fc6ff48d-9858-46be-be10-c3a663f4bcbf
-            resourceGroupName: diehlabs-dns
-            hostedZoneName: diehlabs.com # zone currently managed by Terraform with cluster
             environment: AzurePublicCloud
+            tenantID: fc6ff48d-9858-46be-be10-c3a663f4bcbf

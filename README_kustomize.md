@@ -13,5 +13,32 @@ Bootstrapping:
 
 ## or?
 1. Install argocd
+    * `kubectl apply -k ./k8s/argocd`
 2. Install cluster-apps
-    * installs everything else and will manage argocd itself as well
+    * Installs everything else and will manage argocd itself as well
+    * Configure k8s secret for cert manager, see below
+        * `kubectl apply -f ./k8s/namespace/cert-manager.yaml`
+        * ``
+    * `kubectl apply -k ./k8s/cluster-apps`
+
+```yaml
+# Create the cert-manager namespace since it won't exist yet
+# k8s/namespace/cert-manager.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  creationTimestamp: null
+  name: cert-manager
+spec: {}
+status: {}
+# The cluster issuer requires a k8s secret for the spn client secret
+# create ahead of time for now, later use vault
+apiVersion: v1
+kind: Secret
+metadata:
+  name: azuredns-config
+  namespace: cert-manager
+type: Opaque
+data:
+  client-secret: <base64 encoded spn client secret>
+```

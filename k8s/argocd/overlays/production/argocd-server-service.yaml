@@ -4,22 +4,3 @@
 #   name: argocd-server
 # spec:
 #   type: ClusterIP
-
-
-    # helm:
-    #   values: |
-    #     argo-cd:
-    #       metadata:
-    #         namespace: argocd
-    #       dex:
-    #         enabled: false
-    #       server:
-    #         extraArgs:
-    #           - --insecure
-    #           - --rootpath
-    #           - /argocd
-    #         config:
-    #           repositories: |
-    #             - type: helm
-    #               name: argo-cd
-    #               url: https://argoproj.github.io/argo-helm
