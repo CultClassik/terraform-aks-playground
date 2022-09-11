@@ -21,8 +21,8 @@ spec:
       prune: true
       selfHeal: true
   # this ensures argocd doesn't see the app as constantly out of sync (key: control-plane)
-  ignoreDifferences:
-    - group: admissionregistration.k8s.io
-      kind: ValidatingWebhookConfiguration
-      jqPathExpressions:
-       - .webhooks[]?.namespaceSelector.matchExpressions
+  # ignoreDifferences:
+  #   - group: admissionregistration.k8s.io
+  #     kind: ValidatingWebhookConfiguration
+  #     jqPathExpressions:
+  #      - .webhooks[]?.namespaceSelector.matchExpressions

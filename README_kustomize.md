@@ -27,6 +27,21 @@ Bootstrapping:
             --from-literal=client-secret=$ARM_CLIENT_SECRET
         ```
     * `kubectl apply -k ./k8s/cluster-apps`
+3. Monitoring bootstrap and troubleshooting
+    * Can't access UI thru istio yet!
+    ```bash
+    # get the initial password for "admin" in argocd
+    kubectl get secret argocd-initial-admin-secret \
+        -n argocd \
+        -o jsonpath="{.data.password}" | base64 -d; echo
+
+    # port forward to access the argocd ui at http://localhost:8080/argocd/
+    kubectl port-forward svc/argocd-server \
+        -n argocd 8080:443
+
+
+    ```
+
 
 ```yaml
 # Create the cert-manager namespace since it won't exist yet
