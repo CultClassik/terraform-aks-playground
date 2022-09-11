@@ -13,7 +13,11 @@ Bootstrapping:
 
 ## or?
 1. Install argocd
-    * `kubectl apply -k ./k8s/argocd`
+    ```bash
+    helm repo add
+    helm template argo-cd/argo-cd --values ./values.yaml
+    ```
+    * `kubectl apply -k ./k8s/apps-manifests/argocd`
 2. Install cluster-apps
     * Installs everything else and will manage argocd itself as well
     * Configure k8s secret for cert manager, see below

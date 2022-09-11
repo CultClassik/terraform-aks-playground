@@ -30,7 +30,7 @@ patchesJson6902:
     name: argocd-server
     version: v1
 
-images:
-- name: quay.io/argoproj/argocd
-  newName: ghcr.io/argoproj/argocd
-  newTag: 2.5.0-9fac0f6a
+# images:
+# - name: quay.io/argoproj/argocd
+#   newName: ghcr.io/argoproj/argocd
+#   newTag: 2.5.0-9fac0f6a
