@@ -17,4 +17,7 @@ resource "kubernetes_manifest" "bootstrap" {
       "foo" = "bar"
     }
   }
+  depends_on = [
+    local_file.kubeconfig
+  ]
 }

@@ -15,6 +15,44 @@ spec:
       prune: true
       selfHeal: true
   source:
-    path: k8s/argocd
+    path: k8s/apps-manifest/argocd
     repoURL: https://github.com/CultClassik/terraform-aks-playground
     targetRevision: HEAD
+
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: argocd
+#   namespace: argocd
+#   finalizers:
+#   - resources-finalizer.argocd.argoproj.io
+# spec:
+#   destination:
+#     server: https://kubernetes.default.svc
+#     namespace: argocd
+#   project: default
+#   syncPolicy:
+#     automated:
+#       prune: true
+#       selfHeal: true
+#   source:
+#     chart: argo-cd
+#     repoURL: https://argoproj.github.io/argo-helm
+#     targetRevision: argo-cd-5.4.3
+#     helm:
+#       values: |
+#         argo-cd:
+#           metadata:
+#             namespace: argo-cd
+#           dex:
+#             enabled: false
+#           server:
+#             extraArgs:
+#               - --insecure
+#               - --rootpath
+#               - /argocd
+#             config:
+#               repositories: |
+#                 - type: helm
+#                   name: argo-cd
+#                   url: https://argoproj.github.io/argo-helm
