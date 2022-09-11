@@ -17,8 +17,15 @@ Bootstrapping:
 2. Install cluster-apps
     * Installs everything else and will manage argocd itself as well
     * Configure k8s secret for cert manager, see below
-        * `kubectl apply -f ./k8s/namespace/cert-manager.yaml`
-        * ``
+        ```bash
+        # namespace would normally be created by argocd
+        kubectl create ns cert-manager
+
+        # the secret should normally be stored in vault and created by argocd
+        kubectl create secret generic azuredns-config \
+            -n cert-manager \
+            --from-literal=client-secret=$ARM_CLIENT_SECRET
+        ```
     * `kubectl apply -k ./k8s/cluster-apps`
 
 ```yaml
