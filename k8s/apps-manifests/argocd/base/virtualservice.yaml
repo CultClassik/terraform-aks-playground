@@ -7,7 +7,7 @@ spec:
   hosts:
   - argo.aks.diehlabs.com
   gateways:
-  - istio-ingressgateway
+  - argocd-ingress-gateway
   http:
   - match:
     - uri:
