@@ -10,6 +10,7 @@ resources:
 # - base/virtualservice.yaml
 - base/rollouts-extension.yaml
 - https://raw.githubusercontent.com/argoproj/argo-cd/v2.4.3/manifests/ha/install.yaml
+- base/applications.yaml
 
 # components:
 # - https://github.com/argoproj-labs/argocd-extensions/manifests
