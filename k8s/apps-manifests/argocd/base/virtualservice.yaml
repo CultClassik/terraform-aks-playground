@@ -1,8 +1,8 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  namespace: argocd
   name: argo-cd-https
+  namespace: argocd
 spec:
   hosts:
   - argo.aks.diehlabs.com
@@ -17,12 +17,3 @@ spec:
         port:
           number: 80
         host: argocd-server
-
-
-# helm template \
-#   cert-manager jetstack/cert-manager \
-#   --namespace cert-manager \
-#   --create-namespace \
-#   --version v1.9.1 \
-#   --set installCRDs=true \           # Uncomment to also template CRDs
-#   > cert-manager.custom.yaml
