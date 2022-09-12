@@ -11,6 +11,8 @@ spec:
     namespace: argocd
   project: default
   syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
     automated:
       prune: true
       selfHeal: true
