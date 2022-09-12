@@ -5,7 +5,7 @@ metadata:
   name: argo-cd-https
 spec:
   hosts:
-  - playground.diehlabs.com
+  - argo.aks.diehlabs.com
   gateways:
   - istio-ingressgateway
   http:
@@ -17,3 +17,12 @@ spec:
         port:
           number: 80
         host: argocd-server
+
+
+# helm template \
+#   cert-manager jetstack/cert-manager \
+#   --namespace cert-manager \
+#   --create-namespace \
+#   --version v1.9.1 \
+#   --set installCRDs=true \           # Uncomment to also template CRDs
+#   > cert-manager.custom.yaml

@@ -5,9 +5,9 @@ metadata:
   namespace: argocd
 spec:
   secretName: ingress-cert
-  commonName: playground.diehlabs.com
+  commonName: argo.aks.diehlabs.com
   dnsNames:
-  - playground.diehlabs.com
+  - argo.aks.diehlabs.com
   duration: 2160h0m0s # 90d
   renewBefore: 360h0m0s # 15d
   subject:
