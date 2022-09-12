@@ -15,7 +15,7 @@ spec:
       prune: true
       selfHeal: true
   source:
-    path: k8s/apps-manifest/argocd
+    path: k8s/apps-manifests/argocd
     repoURL: https://github.com/CultClassik/terraform-aks-playground
     targetRevision: HEAD
 
