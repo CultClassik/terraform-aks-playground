@@ -5,7 +5,7 @@ resources:
 - base/argo-cd.yaml
 # - base/argo-rollouts.yaml
 - base/external-dns.yaml
-- base/cert-manager.yaml
+# - base/cert-manager.yaml
 # - base/azure-workload-identity.yaml
 
 
