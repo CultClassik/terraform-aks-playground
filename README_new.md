@@ -6,7 +6,7 @@ kubectl apply -f k8s/namespace &&\
 helm install argocd k8s/argocd --namespace "$ARGO_NS"
 
 # get the initial password for argo "admin" account
-kubectl -n "$ARGO_NS" get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
 
 # port forward for temp access to argo ui
 # browse to localhost:8080
@@ -30,3 +30,7 @@ helm install my-release argo/argo-rollouts
 
 # kiali
 helm repo add kiali https://kiali.org/helm-charts
+
+## istio 
+istioctl manifest generate --set profile=default \
+  --manifests https://github.com/istio/istio/releases/download/1.14.4/istio-1.14.4-linux-amd64.tar.gz

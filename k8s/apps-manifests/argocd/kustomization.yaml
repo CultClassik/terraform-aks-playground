@@ -15,7 +15,7 @@ resources:
 - base/gateway.yaml
 - base/virtualservice.yaml
 # temporary, until https gateway is working again
-- base/argocd-insecure.yaml
+# - base/argocd-insecure.yaml
 
 # components:
 # - https://github.com/argoproj-labs/argocd-extensions/manifests
