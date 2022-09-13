@@ -21,7 +21,3 @@ resources:
 # - base/argo-workflows.yaml
 # - base/argo-events.yaml
 # - base/dex.yaml
-
-
-validatingwebhookconfiguration istio-validator-istio-system 
-(failurePolicy=Fail, resourceVersion=466690) is up-to-date. No change required.
