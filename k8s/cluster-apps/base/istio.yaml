@@ -20,3 +20,13 @@ spec:
     path: k8s/apps-manifests/istio
     repoURL: https://github.com/CultClassik/terraform-aks-playground
     targetRevision: HEAD
+ # this ensures argocd doesn't see the app as constantly out of sync (key: control-plane)
+  ignoreDifferences:
+    - group: admissionregistration.k8s.io
+      kind: ValidatingWebhookConfiguration
+      jqPathExpressions:
+       - .webhooks[]?.namespaceSelector.matchExpressions
+    - group: admissionregistration.k8s.io
+      kind: MutatingWebhookConfiguration
+      jqPathExpressions:
+       - .webhooks[]?.namespaceSelector.matchExpressions
