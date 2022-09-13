@@ -29,4 +29,4 @@ spec:
     - group: admissionregistration.k8s.io
       kind: MutatingWebhookConfiguration
       jqPathExpressions:
-       - .webhooks[]?.namespaceSelector.matchExpressions.control-plane
+       - .webhooks[]?.namespaceSelector.matchExpressions #.control-plane
