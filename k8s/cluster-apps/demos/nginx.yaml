@@ -11,7 +11,7 @@ spec:
     namespace: nginx-demo
   project: default
   source:
-    path: k8s/apps-manifests/nginx-demo
+    path: k8s/apps-manifests/demos/nginx
     repoURL: https://github.com/CultClassik/terraform-aks-playground.git
     targetRevision: HEAD
   syncPolicy:

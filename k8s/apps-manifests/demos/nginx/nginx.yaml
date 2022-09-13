@@ -43,7 +43,7 @@ spec:
   hosts:
   - "*"
   gateways:
-  - argo-cd/istio-ingressgateway
+  - argocd/argocd-ingress-gateway
   http:
   - match:
     - uri:

@@ -9,6 +9,7 @@ resources:
 - base/istio.yaml
 - base/azure-workload-identity.yaml
 
+- demos/nginx.yaml
 
 # - base/ingress-nginx.yaml
 # - base/jenkins.yaml
