@@ -30,7 +30,3 @@ helm install my-release argo/argo-rollouts
 
 # kiali
 helm repo add kiali https://kiali.org/helm-charts
-
-## istio 
-istioctl manifest generate --set profile=default \
-  --manifests https://github.com/istio/istio/releases/download/1.14.4/istio-1.14.4-linux-amd64.tar.gz

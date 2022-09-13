@@ -6,7 +6,7 @@ resources:
 # - base/argo-rollouts.yaml
 - base/external-dns.yaml
 - base/cert-manager.yaml
-# - base/istio.yaml
+- base/istio.yaml
 # - base/azure-workload-identity.yaml
 
 
@@ -21,3 +21,7 @@ resources:
 # - base/argo-workflows.yaml
 # - base/argo-events.yaml
 # - base/dex.yaml
+
+
+validatingwebhookconfiguration istio-validator-istio-system 
+(failurePolicy=Fail, resourceVersion=466690) is up-to-date. No change required.
