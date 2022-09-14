@@ -5,9 +5,6 @@ namespace: argocd
 
 resources:
 - base/namespace.yaml
-# - base/certificate.yaml
-# - base/gateway.yaml
-# - base/virtualservice.yaml
 - base/rollouts-extension.yaml
 - https://raw.githubusercontent.com/argoproj/argo-cd/v2.4.3/manifests/ha/install.yaml
 - base/applications.yaml
