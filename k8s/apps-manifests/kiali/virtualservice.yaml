@@ -10,7 +10,8 @@ spec:
   - argocd/argocd-ingress-gateway
   http:
   - match:
-    - uri: /
+    - uri: 
+        prefix: /
     route:
     - destination:
         port:
