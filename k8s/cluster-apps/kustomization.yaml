@@ -2,15 +2,18 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-- base/argo-cd.yaml
-# - base/argo-rollouts.yaml
-- base/external-dns.yaml
-- base/cert-manager.yaml
-- base/istio.yaml
-- base/kiali.yaml
+- base/argo-rollouts.yaml
 - base/azure-workload-identity.yaml
+- base/istio.yaml
+# dns will create records for istio gateways and vs
+- base/external-dns.yaml
+# certs will be created for fqdns of gateways
+- base/cert-manager.yaml
+# these will create their own istio gateways
+- base/argo-cd.yaml # argo will need a re-start so that envoy proxies get injected
+- base/kiali.yaml
 
-- demos/nginx.yaml
+# - demos/nginx.yaml
 
 # - base/ingress-nginx.yaml
 # - base/jenkins.yaml
