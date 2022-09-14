@@ -7,7 +7,7 @@ resources:
 - base/external-dns.yaml
 - base/cert-manager.yaml
 - base/istio.yaml
-- base/kiali/ingress.yaml
+- base/kiali.yaml
 - base/azure-workload-identity.yaml
 
 - demos/nginx.yaml
