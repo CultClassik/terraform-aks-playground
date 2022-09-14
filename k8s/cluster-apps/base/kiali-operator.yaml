@@ -20,8 +20,8 @@ spec:
     chart: kiali-operator
     repoURL: https://kiali.org/helm-charts
     targetRevision: '1.56.1'
-    # helm:
-    #   values: |
-    #     cr:
-    #       create: true
-    #       namespace: istio-system
+    helm:
+      values: |
+        cr:
+          create: true
+          namespace: istio-system
