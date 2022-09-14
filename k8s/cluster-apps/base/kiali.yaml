@@ -25,3 +25,24 @@ spec:
         cr:
           create: true
           namespace: istio-system
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kiali-config
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: kiali-operator
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+  source:
+    path: k8s/apps-manifests/kiali
+    repoURL: https://github.com/CultClassik/terraform-aks-playground
+    targetRevision: HEAD
