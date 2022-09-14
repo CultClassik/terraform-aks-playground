@@ -54,7 +54,7 @@ spec:
   gateways:
   - kiali-ingress-gateway
   http:
-    route:
+  - route:
     - destination:
         port:
           number: 20001
