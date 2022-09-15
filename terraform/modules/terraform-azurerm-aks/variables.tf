@@ -2,7 +2,7 @@ variable "tags" {
   description = "Tag information to be assigned to resources created."
   type = object({
     product     = string
-    product_id  = string
+    unique_id   = string
     environment = string
     location    = string
     owner       = string
@@ -166,4 +166,10 @@ variable "local_account_disabled" {
   type        = bool
   default     = true
   description = "Disable local admin - this will mean the admin kubeconf will not be usable"
+}
+
+variable "kubelet_identity_uaiid" {
+  type        = string
+  default     = null
+  description = "User assigned identity ID for use by kubelets"
 }

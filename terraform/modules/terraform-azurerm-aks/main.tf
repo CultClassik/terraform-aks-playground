@@ -14,6 +14,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   dns_prefix                        = "diehl"
   private_cluster_enabled           = false
   resource_group_name               = var.resource_group_name
+  node_resource_group               = "${var.resource_group_name}_MC"
   role_based_access_control_enabled = true
   tags                              = local.all_tags
   oidc_issuer_enabled               = true
@@ -42,6 +43,14 @@ resource "azurerm_kubernetes_cluster" "aks" {
     )
   }
 
+  ### This will be a problem if var.create_msi == false and var.kubelet_identity_uaiid is null
+  # ...but ok for playtime
+  kubelet_identity {
+    user_assigned_identity_id = try(
+      var.kubelet_identity_uaiid,
+      azurerm_user_assigned_identity.aks[0].id
+    )
+  }
 
   # make this optional based on new - var.local_account_disabled ?
   # linux_profile {

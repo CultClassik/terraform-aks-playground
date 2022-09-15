@@ -3,8 +3,9 @@ provider "azurerm" {
 }
 
 data "azurerm_client_config" "current" {}
+
 resource "azurerm_resource_group" "terratest" {
-  name     = "rg-aks-terratest-${var.unique_id}"
+  name     = "rg-aks-cluster-${var.unique_id}"
   location = var.tags.location
   tags     = local.tags_all
 }
@@ -35,25 +36,10 @@ resource "azurerm_subnet" "terratest" {
   ]
 }
 
-# resource "local_file" "ssh_private_key" {
-#   content         = tls_private_key.aks.private_key_pem
-#   filename        = "adminuser_rsa.key"
-#   file_permission = "0600"
-# }
-
-resource "local_file" "kubeconfig" {
-  content         = module.aks_cluster.kube_admin_config
-  filename        = "../kubeconfig"
-  file_permission = "0600"
-  depends_on = [
-    module.aks_cluster
-  ]
-}
-
 module "aks_cluster" {
   source                    = "./modules/terraform-azurerm-aks"
   resource_group_name       = azurerm_resource_group.terratest.name
-  tags                      = var.tags
+  tags                      = local.tags
   tags_extra                = var.tags_extra
   subnet_id                 = azurerm_subnet.terratest.id
   docker_bridge_cidr        = "192.168.0.1/16"

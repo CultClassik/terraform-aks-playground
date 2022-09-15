@@ -10,7 +10,7 @@ resources:
 # certs will be created for fqdns of gateways
 - base/cert-manager.yaml
 # these will create their own istio gateways
-- base/argo-cd.yaml # argo will need a re-start so that envoy proxies get injected
+- base/argo-cd.yaml
 - base/kiali.yaml
 
 # - demos/nginx.yaml

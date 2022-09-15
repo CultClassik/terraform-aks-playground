@@ -1,6 +1,18 @@
+Pre-bootstrapping, until further automation & secrets mgmt are in place:
+* Ensure DNS delegation for "aks" subdomain is in place.
+* 
+    ```bash
+    kubectl create ns external-dns &&\
+    kubectl create secret generic azure-config-file --namespace external-dns --from-file ./secret/ext-dns-azure.json
+    ```
+
 Bootstrapping:
 1. istio
-    * create gateway
+    * `kubectl apply -k k8s/apps-manifests/istio`
+2. argocd - this will error but that's ok, it will manage itself now
+    * `kubectl apply -k ./k8s/apps-manifests/argocd`
+
+
 2. cert-manager
     * create clusterissuer
     * create certificate for (hostname)
@@ -17,7 +29,7 @@ Bootstrapping:
     helm repo add
     helm template argo-cd/argo-cd --values ./values.yaml
     ```
-    * `kubectl apply -k ./k8s/apps-manifests/argocd`
+    * ``
 
 2. Install External-DNS
     ```bash
