@@ -20,7 +20,7 @@ resource "local_file" "external_dns_config" {
     resourceGroup               = resource.azurerm_resource_group.terratest.name
     useManagedIdentityExtension = true
   })
-  filename        = "../secret/ext-dns-azure.json"
+  filename        = "../secret/azure.json"
   file_permission = "0600"
   depends_on = [
     module.aks_cluster

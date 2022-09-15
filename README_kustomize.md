@@ -1,9 +1,11 @@
 Pre-bootstrapping, until further automation & secrets mgmt are in place:
 * Ensure DNS delegation for "aks" subdomain is in place.
+* Ensure node MSI has DNS Contributor role assigned (should add to terraform)
+* Ensure settings are correct in k8s/apps-manifests/external-dns and cert-manager overlay files
 * 
     ```bash
     kubectl create ns external-dns &&\
-    kubectl create secret generic azure-config-file --namespace external-dns --from-file ./secret/ext-dns-azure.json
+    kubectl create secret generic azure-config-file --namespace external-dns --from-file ./secret/azure.json
     ```
 
 Bootstrapping:
@@ -39,7 +41,7 @@ Bootstrapping:
     {
     "tenantId": "${ARM_TENANT_ID}",
     "subscriptionId": "${ARM_SUBSCRIPTION_ID}",
-    "resourceGroup": "rg-aks-terratest-002",
+    "resourceGroup": "rg-aks-cluster-001",
     "aadClientId": "${ARM_CLIENT_ID}",
     "aadClientSecret": "${ARM_CLIENT_SECRET}"
     }
