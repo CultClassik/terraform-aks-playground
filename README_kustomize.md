@@ -4,8 +4,15 @@ Pre-bootstrapping, until further automation & secrets mgmt are in place:
 * Ensure settings are correct in k8s/apps-manifests/external-dns and cert-manager overlay files
 * 
     ```bash
+    # external-dns
     kubectl create ns external-dns &&\
     kubectl create secret generic azure-config-file --namespace external-dns --from-file ./secret/azure.json
+
+    # cert-manager
+    kubectl create ns cert-manager &&\
+    kubectl create secret generic azuredns-config \
+        -n cert-manager \
+        --from-literal=client-secret=$ARM_CLIENT_SECRET
     ```
 
 Bootstrapping:
@@ -13,17 +20,13 @@ Bootstrapping:
     * `kubectl apply -k k8s/apps-manifests/istio`
 2. argocd - this will error but that's ok, it will manage itself now
     * `kubectl apply -k ./k8s/apps-manifests/argocd`
-
-
-2. cert-manager
-    * create clusterissuer
-    * create certificate for (hostname)
-3. argo-cd
-    * create vs for argocd ui
-    * install argocd
-4. cluster-apps
-    * install apps from k8s/cluster-apps for argocd
-    * from there argocd will manage everything including itself
+    * 
+        ```bash
+        # get the initial password for "admin" in argocd
+        kubectl get secret argocd-initial-admin-secret \
+            -n argocd \
+            -o jsonpath="{.data.password}" | base64 -d; echo
+        ```
 
 ## or?
 1. Install argocd
@@ -78,32 +81,8 @@ Bootstrapping:
     # port forward to access the argocd ui at http://localhost:8080/argocd/
     kubectl port-forward svc/argocd-server \
         -n argocd 8080:443
-
-
     ```
 
-
-```yaml
-# Create the cert-manager namespace since it won't exist yet
-# k8s/namespace/cert-manager.yaml
-apiVersion: v1
-kind: Namespace
-metadata:
-  creationTimestamp: null
-  name: cert-manager
-spec: {}
-status: {}
-# The cluster issuer requires a k8s secret for the spn client secret
-# create ahead of time for now, later use vault
-apiVersion: v1
-kind: Secret
-metadata:
-  name: azuredns-config
-  namespace: cert-manager
-type: Opaque
-data:
-  client-secret: <base64 encoded spn client secret>
-```
 
 ## Get the Istio gateway info
 ```bash

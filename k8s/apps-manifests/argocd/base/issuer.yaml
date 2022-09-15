@@ -1,0 +1,24 @@
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: argo-issuer
+spec:
+  acme:
+    server: "https://acme-v02.api.letsencrypt.org/directory"
+    email: aks-cert-mgr@diehlabs.com
+    privateKeySecretRef:
+      name: letsencrypt
+    solvers:
+    - dns01:
+        azureDNS:
+          subscriptionID: 502ac5b9-6b22-453d-94f9-5eee652d01ac
+          resourceGroupName: rg-aks-cluster-001
+          hostedZoneName: aks.diehlabs.com
+          # Azure Cloud Environment, default to AzurePublicCloud
+          environment: AzurePublicCloud
+          # optional, only required if node pools have more than 1 managed identity assigned
+          managedIdentity:
+            # client id of the node pool managed identity (can not be set at the same time as resourceID)
+            clientID: a5271a34-edf7-4059-9e8c-bfa545daed9b
+            # resource id of the managed identity (can not be set at the same time as clientID)
+            # resourceID: YOUR_MANAGED_IDENTITY_RESOURCE_ID
