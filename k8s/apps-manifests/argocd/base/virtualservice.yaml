@@ -5,7 +5,7 @@ metadata:
   namespace: argocd
 spec:
   hosts:
-  - argo.aks.diehlabs.com
+  - argo.aksnp.diehlabs.com
   gateways:
   - argocd-ingress-gateway
   http:
