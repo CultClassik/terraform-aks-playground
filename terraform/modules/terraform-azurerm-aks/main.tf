@@ -24,10 +24,10 @@ resource "azurerm_kubernetes_cluster" "aks" {
   # dns_prefix is required if not a private cluster
 
   default_node_pool {
-    name                 = "nodes"
+    name                 = "system"
     tags                 = local.all_tags
-    node_count           = var.node_count
-    vm_size              = var.vm_size
+    node_count           = var.node_count_system
+    vm_size              = var.vm_size_system
     os_disk_size_gb      = var.os_disk_size_gb
     vnet_subnet_id       = var.subnet_id
     type                 = var.node_pool_type

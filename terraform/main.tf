@@ -45,12 +45,14 @@ module "aks_cluster" {
   docker_bridge_cidr        = "192.168.0.1/16"
   dns_service_ip            = "172.16.100.126"
   service_cidr              = "172.16.100.0/25"
-  node_count                = var.node_count
   kubernetes_version_number = "1.24.0"
   location                  = var.tags.location
   max_pods                  = 31
   local_account_disabled    = false
-  vm_size                   = var.vm_size
+  vm_size_system            = var.vm_size_system
+  node_count_system         = var.node_count_system
+  vm_size_worker            = var.vm_size_worker
+  node_count_worker         = var.node_count_worker
   # msi_id            = var.msi_id #data.terraform_remote_state.devtest_infra.outputs.identity.id
   cluster_admin_ids = ["9ba4a348-227d-4411-bc37-3fb81ee8bc48"]
   # laws                = data.azurerm_log_analytics_workspace.example

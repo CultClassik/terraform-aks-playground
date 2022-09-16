@@ -58,8 +58,13 @@ EOD
 #   })
 # }
 
-variable "node_count" {
-  description = "Number of nodes in cluster"
+variable "node_count_system" {
+  description = "Number of nodes in system node pool"
+  type        = string
+}
+
+variable "node_count_worker" {
+  description = "Number of nodes in worker node pool"
   type        = string
 }
 
@@ -73,10 +78,14 @@ variable "subnet_id" {
   type        = string
 }
 
-variable "vm_size" {
+variable "vm_size_system" {
   type        = string
-  description = "VM size for AKS cluster nodes"
-  default     = "Standard_DS3_v2"
+  description = "VM size for AKS system nodes"
+}
+
+variable "vm_size_worker" {
+  type        = string
+  description = "VM size for AKS worker nodes"
 }
 
 variable "os_disk_size_gb" {

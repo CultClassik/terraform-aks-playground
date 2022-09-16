@@ -3,7 +3,12 @@ variable "unique_id" {
   type        = string
 }
 
-variable "node_count" {
+variable "node_count_system" {
+  description = "Number of cluster nodes"
+  type        = number
+}
+
+variable "node_count_worker" {
   description = "Number of cluster nodes"
   type        = number
 }
@@ -17,7 +22,11 @@ variable "tags_extra" {
   default = {}
 }
 
-variable "vm_size" {
+variable "vm_size_system" {
+  type = string
+}
+
+variable "vm_size_worker" {
   type = string
 }
 

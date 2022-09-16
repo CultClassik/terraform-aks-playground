@@ -1,0 +1,11 @@
+resource "azurerm_kubernetes_cluster_node_pool" "worker" {
+  name                  = "worker"
+  kubernetes_cluster_id = azurerm_kubernetes_cluster.aks.id
+  vm_size               = var.vm_size_worker
+  node_count            = var.node_count_worker
+  os_disk_size_gb       = var.os_disk_size_gb
+  vnet_subnet_id        = var.subnet_id
+  max_pods              = var.max_pods
+  orchestrator_version  = local.orchestrator_version
+  tags                  = local.all_tags
+}
