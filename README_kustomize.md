@@ -1,40 +1,62 @@
-Pre-bootstrapping, until further automation & secrets mgmt are in place:
-* Ensure DNS delegation for "aks" subdomain is in place.
-* Ensure node MSI has DNS Contributor role assigned (should add to terraform)
-* Ensure settings are correct in k8s/apps-manifests/external-dns and cert-manager overlay files
+## Provisioning with Terraform
+* Important files created in secret folder, check it.
 * 
     ```bash
+    terraform -chdir=terraform apply -auto-approve
+
+    source secret/env &&\
+    cp terraform/azwi.tf.bak terraform/azwi.tf &&\
+    terraform -chdir=terraform apply -auto-approve \
+        -var "oidc_k8s_issuer_url=$(az aks show -n "$CLUSTER_NAME" -g "$RG_NAME" --query "oidcIssuerProfile.issuerUrl" -otsv)"
+    
+    ```
+
+## Pre-bootstrapping, until further automation & secrets mgmt are in place:
+* Ensure DNS delegation for "aks" subdomain is in place.
+* Ensure node MSI has DNS Contributor role assigned (should add to terraform)
+* Ensure settings are correct in k8s/apps-manifests/argocd, external-dns and cert-manager overlay files
+* 
+    ```bash
+    export KUBECONFIG=$(pwd)/secret/kubeconfig
+
     # external-dns
     kubectl create ns external-dns &&\
     kubectl create secret generic azure-config-file --namespace external-dns --from-file ./secret/azure.json
 
     # cert-manager
     kubectl create ns cert-manager &&\
+    kubectl apply -f secret/azwi-sa-dns-contrib.yaml -n cert-manager &&\
     kubectl create secret generic azuredns-config \
         -n cert-manager \
         --from-literal=client-secret=$ARM_CLIENT_SECRET
     ```
 
-Bootstrapping:
+## Bootstrapping:
 1. istio
     * `kubectl apply -k k8s/apps-manifests/istio`
-2. argocd - this will error but that's ok, it will manage itself now
-    * `kubectl apply -k ./k8s/apps-manifests/argocd`
+2. argocd
     * 
         ```bash
+        # this will error but that's ok, it will manage itself later
+        kubectl apply -k ./k8s/apps-manifests/argocd
+
         # get the initial password for "admin" in argocd
         kubectl get secret argocd-initial-admin-secret \
             -n argocd \
             -o jsonpath="{.data.password}" | base64 -d; echo
         ```
 
-## or?
-1. Install argocd
+## Start/stop cluster to keep costs down
+* 
     ```bash
-    helm repo add
-    helm template argo-cd/argo-cd --values ./values.yaml
+    source secret/env
+
+    az aks start -n $CLUSTER_NAME -g $RG_NAME
+
+    az aks stop -n $CLUSTER_NAME -g $RG_NAME
     ```
-    * ``
+
+
 
 2. Install External-DNS
     ```bash
@@ -86,11 +108,11 @@ Bootstrapping:
 
 ## Get the Istio gateway info
 ```bash
-NS_INGRESS=istio-ingress &&\
-export INGRESS_HOST=$(kubectl -n "$NS_INGRESS" get service istio-ingress -o jsonpath='{.status.loadBalancer.ingress[0].ip}') &&\
-export INGRESS_PORT=$(kubectl -n "$NS_INGRESS" get service istio-ingress -o jsonpath='{.spec.ports[?(@.name=="http2")].port}') &&\
-export SECURE_INGRESS_PORT=$(kubectl -n "$NS_INGRESS" get service istio-ingress -o jsonpath='{.spec.ports[?(@.name=="https")].port}') &&\
-export TCP_INGRESS_PORT=$(kubectl -n "$NS_INGRESS" get service istio-ingress -o jsonpath='{.spec.ports[?(@.name=="tcp")].port}') &&\
+NS_INGRESS=istio-system &&\
+export INGRESS_HOST=$(kubectl -n "$NS_INGRESS" get service istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].ip}') &&\
+export INGRESS_PORT=$(kubectl -n "$NS_INGRESS" get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="http2")].port}') &&\
+export SECURE_INGRESS_PORT=$(kubectl -n "$NS_INGRESS" get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="https")].port}') &&\
+export TCP_INGRESS_PORT=$(kubectl -n "$NS_INGRESS" get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="tcp")].port}') &&\
 echo "INGRESS_HOST: $INGRESS_HOST" &&\
 echo "INGRESS_PORT: $INGRESS_PORT" &&\
 echo "SECURE_INGRESS_PORT: $SECURE_INGRESS_PORT" &&\

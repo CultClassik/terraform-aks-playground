@@ -17,7 +17,7 @@ resource "local_file" "external_dns_config" {
   content = jsonencode({
     tenantId                    = data.azurerm_client_config.current.tenant_id
     subscriptionId              = data.azurerm_client_config.current.subscription_id
-    resourceGroup               = resource.azurerm_resource_group.terratest.name
+    resourceGroup               = azurerm_resource_group.aks_dns_nonprod.name
     useManagedIdentityExtension = true
   })
   filename        = "../secret/azure.json"
@@ -28,11 +28,12 @@ resource "local_file" "external_dns_config" {
 }
 
 resource "local_file" "env_vars" {
-  content = <<EOT
+  content         = <<EOT
 RG_NAME="${azurerm_resource_group.terratest.name}"
 DNS_RG_NAME="${azurerm_resource_group.aks_dns_nonprod.name}"
 DNS_ZONE_NAME="${azurerm_dns_zone.aksnp_diehlabs_com.name}"
-CLUSTER_NAME="${module.aks_cluster.cluster_fqdn}"
+CLUSTER_FQDN="${module.aks_cluster.cluster_fqdn}"
+CLUSTER_NAME="${module.aks_cluster.cluster_name}"
 MSI_ID="${module.aks_cluster.kubelet_identity[0].client_id}"
 EOT
   filename        = "../secret/env"

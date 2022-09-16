@@ -47,7 +47,7 @@ module "aks_cluster" {
   service_cidr              = "172.16.100.0/25"
   kubernetes_version_number = "1.24.0"
   location                  = var.tags.location
-  max_pods                  = 31
+  max_pods                  = var.max_pods
   local_account_disabled    = false
   vm_size_system            = var.vm_size_system
   node_count_system         = var.node_count_system

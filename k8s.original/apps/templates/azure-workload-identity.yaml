@@ -23,3 +23,10 @@ spec:
     automated:
       prune: true
       selfHeal: true
+
+# helm template \
+#   cert-manager azure-workload-identity/workload-identity-webhook \
+#   --namespace azure-workload-identity-system \
+#   --create-namespace \
+#   --version 0.13.0 \
+#   --set azureTenantID=fc6ff48d-9858-46be-be10-c3a663f4bcbf

@@ -9,3 +9,5 @@ kubeconfig
 *.crt
 **/certs
 secret/*
+*.plan
+azwi.tf

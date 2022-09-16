@@ -45,7 +45,7 @@ spec:
 #       values: |
 #         argo-cd:
 #           metadata:
-#             namespace: argo-cd
+#             namespace: argocd
 #           dex:
 #             enabled: false
 #           server:

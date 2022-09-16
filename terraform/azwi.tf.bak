@@ -1,0 +1,70 @@
+# resources for azure workload identity
+# https://dev.to/maxx_don/implement-azure-ad-workload-identity-on-aks-with-terraform-3oho
+
+locals {
+  namespace_name = "app-ns"
+  ## This should match the name of the service account created by helm chart
+  service_account_name = "app-${local.namespace_name}"
+
+  azwi_sa_manifest = {
+    apiVersion = "v1"
+    kind       = "ServiceAccount"
+    metadata = {
+      name = "dns-contrib"
+      # namespace = "cert-manager"
+      labels = {
+        "azure.workload.identity/use" = "true"
+      }
+      annotations = {
+        "azure.workload.identity/client-id" = "${azuread_application.azwi.application_id}"
+        "azure.workload.identity/tenant-id" = "${data.azurerm_client_config.current.subscription_id}"
+      }
+    }
+  }
+}
+
+## Azure AD application that represents the app
+resource "azuread_application" "azwi" {
+  display_name = "sp-app-${var.tags.environment}"
+}
+
+resource "azuread_service_principal" "azwi" {
+  application_id = azuread_application.azwi.application_id
+}
+
+resource "azuread_service_principal_password" "azwi" {
+  service_principal_id = azuread_service_principal.azwi.id
+}
+
+## Azure AD federated identity used to federate kubernetes with Azure AD
+resource "azuread_application_federated_identity_credential" "azwi" {
+  application_object_id = azuread_application.azwi.object_id
+  display_name          = "fed-identity-app-${var.tags.environment}"
+  description           = "The federated identity used to federate K8s with Azure AD with the app service running in k8s ${var.tags.environment}"
+  audiences             = ["api://AzureADTokenExchange"]
+  issuer                = var.oidc_k8s_issuer_url
+  subject               = "system:serviceaccount:${local.namespace_name}:${local.service_account_name}"
+}
+
+resource "azurerm_role_assignment" "azwi_dns" {
+  scope                = azurerm_resource_group.aks_dns_nonprod.id
+  role_definition_name = "DNS Zone Contributor"
+  principal_id         = azuread_service_principal.azwi.object_id
+}
+
+############
+
+output "azwi_app_client_id" {
+  value = azuread_application.azwi.application_id
+}
+
+variable "oidc_k8s_issuer_url" {}
+
+resource "local_file" "azwi_sa_manifest" {
+  content         = yamlencode(local.azwi_sa_manifest)
+  filename        = "../secret/azwi-sa-dns-contrib.yaml"
+  file_permission = "0600"
+  depends_on = [
+    module.aks_cluster
+  ]
+}

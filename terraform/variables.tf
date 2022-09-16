@@ -11,6 +11,7 @@ variable "node_count_system" {
 variable "node_count_worker" {
   description = "Number of cluster nodes"
   type        = number
+  default     = 0
 }
 
 variable "tags" {
@@ -27,7 +28,8 @@ variable "vm_size_system" {
 }
 
 variable "vm_size_worker" {
-  type = string
+  type    = string
+  default = null
 }
 
 # variable "auto_start_time" {
@@ -39,3 +41,7 @@ variable "vm_size_worker" {
 #   description = "IP of the LB created by AKS for the nodepool"
 #   default     = null
 # }
+
+variable "max_pods" {
+  type = number
+}

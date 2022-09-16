@@ -10,13 +10,24 @@ spec:
     server: https://kubernetes.default.svc
     namespace: azure-workload-identity-system
   project: default
+  source:
+    chart: workload-identity-webhook
+    repoURL: https://azure.github.io/azure-workload-identity/charts
+    targetRevision: '0.13.0'
+    helm:
+      values: |
+        azureTenantID: fc6ff48d-9858-46be-be10-c3a663f4bcbf
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
     automated:
       prune: true
       selfHeal: true
-  source:
-    path: k8s/apps-manifests/azure-workload-identity
-    repoURL: https://github.com/CultClassik/terraform-aks-playground
-    targetRevision: HEAD
+
+# helm template \
+#   cert-manager azure-workload-identity/workload-identity-webhook \
+#   --namespace azure-workload-identity-system \
+#   --create-namespace \
+#   --version 0.13.0 \
+#   --set azureTenantID=fc6ff48d-9858-46be-be10-c3a663f4bcbf \
+# | kubectl apply -f -x

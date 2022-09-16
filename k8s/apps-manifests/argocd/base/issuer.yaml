@@ -12,14 +12,28 @@ spec:
     solvers:
     - dns01:
         azureDNS:
+          subscriptionIDRef:
+            key: subscriptionID
+            name: azuredns-config
+          resourceGroupNameRef:
+          hostedZoneNameRef:
+          managedIdentityRef:
+
           subscriptionID: 502ac5b9-6b22-453d-94f9-5eee652d01ac
           resourceGroupName: rg-aks-cluster-001
           hostedZoneName: aks.diehlabs.com
-          # Azure Cloud Environment, default to AzurePublicCloud
           environment: AzurePublicCloud
-          # optional, only required if node pools have more than 1 managed identity assigned
           managedIdentity:
-            # client id of the node pool managed identity (can not be set at the same time as resourceID)
             clientID: a5271a34-edf7-4059-9e8c-bfa545daed9b
-            # resource id of the managed identity (can not be set at the same time as clientID)
-            # resourceID: YOUR_MANAGED_IDENTITY_RESOURCE_ID
+
+          # subscriptionID: 502ac5b9-6b22-453d-94f9-5eee652d01ac
+          # resourceGroupName: rg-aks-cluster-001
+          # hostedZoneName: aks.diehlabs.com
+          # # Azure Cloud Environment, default to AzurePublicCloud
+          # environment: AzurePublicCloud
+          # # optional, only required if node pools have more than 1 managed identity assigned
+          # managedIdentity:
+          #   # client id of the node pool managed identity (can not be set at the same time as resourceID)
+          #   clientID: a5271a34-edf7-4059-9e8c-bfa545daed9b
+          #   # resource id of the managed identity (can not be set at the same time as clientID)
+          #   # resourceID: YOUR_MANAGED_IDENTITY_RESOURCE_ID

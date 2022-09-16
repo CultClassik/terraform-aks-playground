@@ -1,1 +1,1 @@
-- {op: add,  path: /spec/template/spec/containers/0/args/-, value: --azure-resource-group=rg-aks-cluster-001 }
+- {op: add,  path: /spec/template/spec/containers/0/args/-, value: --azure-resource-group=diehlabs-dns-nonprod }
