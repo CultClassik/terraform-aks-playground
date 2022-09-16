@@ -21,14 +21,14 @@ spec:
 
           subscriptionID: 502ac5b9-6b22-453d-94f9-5eee652d01ac
           resourceGroupName: rg-aks-cluster-001
-          hostedZoneName: aks.diehlabs.com
+          hostedZoneName: aksnp.diehlabs.com
           environment: AzurePublicCloud
           managedIdentity:
             clientID: a5271a34-edf7-4059-9e8c-bfa545daed9b
 
           # subscriptionID: 502ac5b9-6b22-453d-94f9-5eee652d01ac
           # resourceGroupName: rg-aks-cluster-001
-          # hostedZoneName: aks.diehlabs.com
+          # hostedZoneName: aksnp.diehlabs.com
           # # Azure Cloud Environment, default to AzurePublicCloud
           # environment: AzurePublicCloud
           # # optional, only required if node pools have more than 1 managed identity assigned
